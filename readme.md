@@ -66,13 +66,15 @@
 
 <p>Почему <code>this._i</code> не увеличивается. Как исправить?</p>
 
-<code><pre>function Ticker() {
-    this._i = 0
+<pre><code>
+function Ticker() {
+  this._i = 0
 };
 Ticker.prototype = {
-    tick: function() {
-       console.log(this._i++);
-    }
+  tick: function() {
+     console.log(this._i++);
+  }
 };
-var ticker = new Ticker();</pre>
-</code>
+var ticker = new Ticker();
+</code></pre>
+
