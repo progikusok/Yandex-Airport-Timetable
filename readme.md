@@ -70,11 +70,84 @@
 function Ticker() {
   this._i = 0
 };
+
 Ticker.prototype = {
   tick: function() {
      console.log(this._i++);
   }
 };
+
 var ticker = new Ticker();
+setInterval(ticker.tick, 1000);
+```
+<h3>Ответ</h3>
+
+<p>Причина некорректной работы кода кроется внутри функции `setInterval(...)`.
+Код внутри этой функции выполняется в отдельной области видимости, а значит значение <code>this</code> будет равно глобальной области видимости, т.е. <code>window</code>. `this = window`.
+Глобальный объект <code>window</code>, в свою очередь, не имеет значение <code>_i</code>. То есть при выполнении получаем `undefined + 1 = NaN`, что и приводит к некорректной работе.
+</p>
+
+<h3>Варианты исправления</h3>
+
+<h4>Вариант 1</h4>
+
+<p>Надо передать контекст исполнения, а точнее привязать. Тогда мы явно указываем в какой области видимости должен выполняться код. Делаем это при помощи <code>bind</code>.</p>
+
+```javascript
+function Ticker() {
+  this._i = 0
+};
+
+Ticker.prototype = {
+  tick: function() {
+     console.log(this._i++);
+  }
+};
+
+var ticker = new Ticker();
+setInterval(ticker.tick.bind(this), 1000);
 ```
 
+<h4>Вариант 2</h4>
+
+<p>Смылс такой же как с <code>bind</code>. Нужно передать контектс исполнения. Поэтому в области видимости <code>window</code> создадим элемент <code>self</code>, куда и сохраним необходимый <code>this</code>.
+Если верить интернету и учебникам, это самый кроссбраузерный способ.
+</p>
+
+```javascript
+var self = null;
+
+function Ticker() {
+    this._i = 0;
+    self = this;
+};
+
+Ticker.prototype = {
+  tick: function() {
+     console.log(self._i++);
+  }
+};
+
+var ticker = new Ticker();
+setInterval(ticker.tick, 1000);
+```
+<h4>Вариант 3</h4>
+<p>Не рекоммендуется применять согласно слогану <q>eval is evil</q> (потому что eval имеет доступ к локальным переменным, которые легко могут быть переименованы, а значит код будет не валидным). Но здесь приводим в качестве примера.</p>
+
+```javascript
+var self = null;
+
+function Ticker() {
+    this._i = 0;
+    self = this;
+};
+
+Ticker.prototype = {
+  tick: function() {
+     console.log(self._i++);
+  }
+};
+
+var ticker = new Ticker();
+setInterval(eval('ticker.tick'), 1000);
+```
