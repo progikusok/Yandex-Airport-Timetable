@@ -66,7 +66,7 @@
 
 <p>Почему <code>this._i</code> не увеличивается. Как исправить?</p>
 
-<pre><code>
+```javascript
 function Ticker() {
   this._i = 0
 };
@@ -76,5 +76,5 @@ Ticker.prototype = {
   }
 };
 var ticker = new Ticker();
-</code></pre>
+```
 
