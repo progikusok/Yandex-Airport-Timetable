@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+
+	<meta charset="utf-8">
+	<!--<base href="/">-->
+
+	<title>Табло рейсов</title>
+	<meta name="description" content="Тестовое задание для Яндекса">
+
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	
+	<!-- Template Basic Images Start -->
+	<meta property="og:image" content="path/to/image.jpg">
+	<link rel="icon" href="img/favicon/favicon.ico">
+	<link rel="apple-touch-icon" sizes="180x180" href="img/favicon/apple-touch-icon-180x180.png">
+	<!-- Template Basic Images End -->
+	
+	<!-- Custom Browsers Color Start -->
+	<meta name="theme-color" content="#000">
+	<!-- Custom Browsers Color End -->
+
+	<link rel="stylesheet" href="css/main.min.css">
+
+</head>
+
+<body>
+
+	<div class="scroll-indicator"></div>
+	<header>
+		<div class="container">
+			<div class="row">
+				<div class="col-10">
+					<h1>Табло рейсов</h1>
+				</div>
+				<div class="col-2">
+					<div class="info-icon">
+						<svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+							 viewBox="0 0 330 330" style="enable-background:new 0 0 330 330;" xml:space="preserve">
+							<g>
+								<path d="M165,0C74.019,0,0,74.02,0,165.001C0,255.982,74.019,330,165,330s165-74.018,165-164.999C330,74.02,255.981,0,165,0z
+									 M165,300c-74.44,0-135-60.56-135-134.999C30,90.562,90.56,30,165,30s135,60.562,135,135.001C300,239.44,239.439,300,165,300z"/>
+								<path d="M164.998,70c-11.026,0-19.996,8.976-19.996,20.009c0,11.023,8.97,19.991,19.996,19.991
+									c11.026,0,19.996-8.968,19.996-19.991C184.994,78.976,176.024,70,164.998,70z"/>
+								<path d="M165,140c-8.284,0-15,6.716-15,15v90c0,8.284,6.716,15,15,15c8.284,0,15-6.716,15-15v-90C180,146.716,173.284,140,165,140z
+									"/>
+							</g>
+						</svg>
+					</div>
+				</div>
+				<div class="col">
+					Аэропорт Шереметьево, сегодня
+				</div>
+			</div>
+		</div>
+	</header>
+
+	<div class="info-wrapper">
+		<div class="description-wrapper">
+			<div class="description">
+				<p>Табло рейсов — реализация тестового задания от Яндекса в&nbsp;качестве испытания на&nbsp;стажировку. В табло должны быть реализованы следующие функции:</p>
+				<ul>
+					<li>Просмотр только вылетающих рейсов</li>
+					<li>Просмотр только прилетающих рейсов</li>
+					<li>Просмотр задержанных рейсов</li>
+					<li>Поиск по номеру рейса</li>
+				</ul>
+			</div>		
+		</div>
+		<div class="close">
+			Закрыть
+		</div>
+	</div>
+
+	<section class="flight" id="vue-data">
+
+		<section class="main-menu">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-12">
+						<ul>
+							<li v-on:click="flyAction('departure')" class="active">Вылет</li>
+							<li v-on:click="flyAction('arrival')">Прилет</li>
+						</ul>
+					</div>
+					<div class="col-md-4">
+						<label class="search-hours search">
+							<input type="text" v-model="dateInput" class="search-input" @keyup.enter="getData">
+							<span>Введите дату и нажмите enter...</span>	
+							<span class="date-format-info">формат ГГГГ-ММ-ДД</span>
+						</label>
+					</div>
+					<div class="col-md-3">
+						<label class="search-hours search">
+							<input type="text" v-model.number="hourInput" class="search-input" @keyup.enter="getData">
+							<span>Введите час и нажмите enter...</span>
+						</label>
+					</div>
+					<div class="col-md-5">
+						<label class="search">
+							<input type="text" v-model="input" class="search-input" @keyup.enter="search">
+							<span>Поик по номеру рейса...</span>
+						</label>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<div class="container">
+
+			<div v-if="loading" class="loader"><div class="circle-loader-2"></div></div>
+
+			<div v-else v-for="air in filteredList" class="row row-wrapper">
+
+						
+					<div class="col-md-2">
+						<div v-if="action === 'arrival'" class="date">
+							<div class="notline">
+								{{ air.arrivalTime | dateFormat }}
+							</div>
+							<div :class="{ 'line': true }">
+								{{ air.arrivalTime | dateFormat  }}
+							</div>
+						</div>
+						<div v-else class="date">
+							<div class="notline">
+								{{ air.departureTime | dateFormat }}
+							</div>
+							<div class="line">
+								{{ air.departureTime | dateFormat }}
+							</div>
+						</div>
+					</div>
+
+					<div class="col-md-4">
+						<div class="city" v-if="action === 'arrival'" id="city">{{ air.departureAirportFsCode | cityFormat }}</div>
+						<div class="city" v-else id="city">{{ air.arrivalAirportFsCode | cityFormat }}</div>
+					</div>
+					<div class="col-md-2">
+						<div class="trip">
+							{{ air.departureAirportFsCode }} {{ air.flightNumber }}
+						</div>
+					</div>
+					<div class="col-md-1">
+						<div v-if="action === 'arrival'" class="terminal">{{ air.arrivalTerminal }}</div>
+						<div v-else class="terminal">{{ air.departureTerminal }}</div>
+					</div>
+					<div class="col-md-3">
+						<div class="info">
+							Ожидается прибытие в {{ air.arrivalAirportFsCode | cityFormat }} <br> в {{ air.arrivalTime | dateFormat }}
+						</div>
+					</div>
+
+
+			</div>
+
+		</div>
+
+	</section>
+
+	<footer>
+		<div class="container">
+			<div class="row">
+				<div class="col">
+					&copy; &nbsp;<a target="_blank" href="http://mkirichenko.com">Михаил Кириченко</a>
+				</div>
+			</div>
+		</div>
+	</footer>	
+
+	<script src="cases.json"></script>
+	<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+	<script src="js/scripts.min.js"></script>
+
+</body>
+</html>

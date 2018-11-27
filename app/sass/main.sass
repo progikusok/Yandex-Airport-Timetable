@@ -1,0 +1,317 @@
+@import "vars"
+@import "fonts"
+@import "libs"
+
+::placeholder
+	color: #666
+
+::selection
+	background-color: $accent
+	color: #fff
+
+html, body
+	height: 100%
+
+body
+	font-size: 16px
+	min-width: 320px
+	position: relative
+	line-height: 1.65
+	font-family: $default-font
+	overflow-x: hidden
+	input, textarea
+			border: #666 1px solid
+			outline: none
+			&:focus:required:invalid
+				border-color: red
+			&:required:valid
+				border-color: green
+
+.img-responsive
+	display: block
+	max-width: 100%
+	height: auto
+
+.text-center
+	text-align: center
+
+.text-right
+	text-align: right
+
+header
+	padding-top: 70px
+	h1
+		font-size: 51px
+		line-height: 1em
+	.info-icon
+		text-align: right
+		height: 100%
+		svg
+			width: 30px
+			height: auto
+			margin-top: 15px
+			fill: $green
+			transition: all .2s ease
+			transfrom: scale(1)
+			&:hover
+				fill: $yellow
+				transform: scale(1.1)
+		&:hover
+			cursor: pointer
+
+.info-wrapper
+	position: fixed
+	top: 0
+	left: 0
+	width: 100%
+	height: 100vh
+	z-index: 100
+	//background-color: rgba(255,255,255,.8)
+	background-color: #fff
+	transform: translateY(-100%)
+	opacity: 0
+	transition: all .2s ease
+	&.open
+		transform: translateY(0)
+		opacity: 1
+	.description
+		position: absolute
+		top: 50%
+		left: 50%
+		transform: translate(-50%, -50%)
+		margin: 0
+		width: 90%
+	.close
+		position: absolute
+		top: 20px
+		right: 20px
+		width: 100px
+		text-align: right
+		height: auto
+		text-transform: uppercase
+		margin-top: 15px
+		transition: all .2s ease
+		transfrom: scale(1)
+		&:hover
+			cursor: pointer
+			transform: scale(1.1)
+
+
+.description
+	max-width: 700px
+	margin: 60px 0 30px
+	font-size: 20px
+	line-height: 30px
+	font-weight: 300
+	ul
+		margin: 0
+
+
+.main-menu
+	margin-top: 40px
+	margin-bottom: 50px
+	ul, li
+		padding: 0
+		margin: 0
+		list-style-type: none
+		position: relative
+	li
+		display: inline-block
+		cursor: pointer
+		font-size: 30px
+		padding: 5px 15px 15px
+		margin: 0 4px
+		padding-top: 20px
+		margin-bottom: 10px
+		line-height: 15px
+		transition: all .2s ease
+		position: relative
+		text-decoration: none
+		font-weight: bold
+		margin-top: 10px
+		&:after
+			content: ''
+			position: absolute
+			bottom: 0
+			right: 0
+			left: auto
+			width: 0%
+			height: 4px
+			background-color: $yellow
+			transition: all .2s ease
+		&.active
+			&:after
+				width: 100%
+		&:hover
+			&:after
+				width: 100%
+				right: auto
+				left: 0
+
+.search
+	position: relative
+	transition: all .2s ease
+	width: 100%
+	margin: 0
+	margin-bottom: 30px
+	margin-top: 30px
+	.search-input
+		width: 100%
+		padding: 10px 10px
+		border: none
+		display: block
+		background-color: transparent
+		border-bottom: 2px solid $black
+		transition: all .2s ease
+		&:focus
+			& + span
+				top: -12px
+				font-size: 12px
+				color: $black
+	span
+		position: absolute
+		top: 10px
+		left: 10px
+		transition: all .2s ease
+		max-width: 100%
+		overflow: hidden
+		//font-size: 14px
+		color: #666
+
+.search-hours
+	.search-input
+		font-size: 16px
+		& + span
+					top: -12px
+					font-size: 12px
+					color: $black
+
+.search
+	.date-format-info
+		position: relative
+		top: auto
+		left: auto
+		padding-left: 10px
+		overflow: hidden
+		font-size: 12px
+		color: #666
+
+.flight
+	margin-top: 50px
+	//min-height: 100vh
+	margin-bottom: 90px
+	font-size: 20px
+	line-height: 30px
+	.row-wrapper
+		padding-top: 30px 
+		padding-bottom: 30px
+		position: relative
+		&:before
+			content: ''
+			position: absolute
+			bottom: 0
+			left: 0
+			width: 100%
+			height: 4px
+			background-color: $green
+			transition: all .3s ease
+		&:hover
+			&:before
+				height: 100%
+	.city
+		font-size: 26px
+		font-weight: bold
+	.trip
+		font-weight: bold
+	.terminal
+		font-weight: bold
+
+.scroll-indicator
+	width: 0%
+	position: fixed
+	top: 0
+	left: 0
+	height: 4px
+	z-index: 100
+	background-color: $yellow
+
+a
+	text-decoration: none
+	outline: none
+	color: #666
+	position: relative
+	padding-bottom: 5px
+	&:after
+		content: ''
+		position: absolute
+		bottom: 0
+		right: 0
+		left: auto
+		background-color: $green
+		width: 0
+		height: 2px
+		transition: all .2s ease
+	&:hover
+		text-decoration: none
+		outline: none
+		color: $black
+		&:after
+			right: auto
+			left: 0
+			width: 100%
+
+.line
+	text-decoration: line-through
+
+.notline
+	&.red
+		color: #c00
+
+.dispn
+	display: non255
+
+footer
+	font-size: 14px
+	color: #666
+	text-align: left
+	padding: 40px 0
+	z-index: -1
+
+.loader
+	position: absolute
+	top: 0
+	left: 0
+	width: 100%
+	height: 100%
+	background-color: rgba(255, 255, 255, .8)
+
+.circle-loader-2
+	width: 40px
+	min-width: 40px
+	height: 40px
+	min-height: 40px
+	position: absolute
+	top: 50%
+	left: 50%
+	margin-left: -20px
+	margin-top: -20px
+	border-radius: 50%
+	border-top: 2px solid rgba(255, 204, 0, 0)
+	border-right: 2px solid rgba(255, 204, 0, 1)
+	border-bottom: 2px solid rgba(255, 204, 0, 1)
+	border-left: 2px solid rgba(255, 204, 0, 1)
+	-webkit-transform: translateZ(0)
+	-ms-transform: translateZ(0)
+	transform: translateZ(0)
+	-webkit-animation: circle-loader-spin 1s infinite linear
+	animation: circle-loader-spin 1s infinite linear
+
+@keyframes circle-loader-spin
+	0%
+		-webkit-transform: rotate(0deg)
+		transform: rotate(0deg)
+	100%
+		-webkit-transform: rotate(360deg)
+		transform: rotate(360deg)
+
+@import "media" // Always at the end
