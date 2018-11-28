@@ -158,8 +158,8 @@ var app = new Vue({
 			}
 
 			// составляем строки запросов
-			var scheduledURL = 'https://api.flightstats.com/flex/schedules/rest/v1/json/from/SVO/departing/'+todayYear+'/'+todayMonth+'/'+todayDay+'/'+todayCurrentHour+'?appId=23c58200&appKey=a9c71a66671694d9a3d5e2562bab8df5';
-			var arrivalURL = 'https://api.flightstats.com/flex/schedules/rest/v1/json/to/SVO/arriving/'+todayYear+'/'+todayMonth+'/'+todayDay+'/'+todayCurrentHour+'?appId=23c58200&appKey=a9c71a66671694d9a3d5e2562bab8df5';
+			var scheduledURL = 'https://cors-anywhere.herokuapp.com/https://api.flightstats.com/flex/schedules/rest/v1/json/from/SVO/departing/'+todayYear+'/'+todayMonth+'/'+todayDay+'/'+todayCurrentHour+'?appId=23c58200&appKey=a9c71a66671694d9a3d5e2562bab8df5';
+			var arrivalURL = 'https://cors-anywhere.herokuapp.com/https://api.flightstats.com/flex/schedules/rest/v1/json/to/SVO/arriving/'+todayYear+'/'+todayMonth+'/'+todayDay+'/'+todayCurrentHour+'?appId=23c58200&appKey=a9c71a66671694d9a3d5e2562bab8df5';
 			
 			// производим выгрузку данных
 			axios
